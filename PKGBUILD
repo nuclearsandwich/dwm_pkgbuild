@@ -14,16 +14,19 @@ options=(zipman)
 depends=('libx11' 'libxinerama')
 install=dwm.install
 source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
-	config.h
-	dwm.desktop)
+  config.h
+  dwm.desktop
+  dwm-6.0-xft.diff)
 
 md5sums=('8bb00d4142259beb11e13473b81c0857'
-         'b6bacd318e8fcbd3a89ad6e36675ceec'
-         '939f403a71b6e85261d09fc3412269ee')
+         'a9a397bbd5f5bc138333f604a8a2c654'
+         '939f403a71b6e85261d09fc3412269ee'
+         '67680c247511a65227ced3b8cccffb4a')
 
 build() {
   cd $srcdir/$pkgname-$pkgver
   cp $srcdir/config.h config.h
+  patch -p0 dwm.c ../dwm-6.0-xft.diff
   sed -i 's/CPPFLAGS =/CPPFLAGS +=/g' config.mk
   sed -i 's/^CFLAGS = -g/#CFLAGS += -g/g' config.mk
   sed -i 's/^#CFLAGS = -std/CFLAGS += -std/g' config.mk
